@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>אלעד ראובן - מספרה</title>
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* עיצוב כללי ומפת צבעים */
+        :root {
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --accent-color: #c5a880; /* צבע זהב מעודן */
+            --text-color: #ffffff;
+            --text-muted: #b3b3b3;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Assistant', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        /* סרגל ניווט */
+        header {
+            background-color: rgba(18, 18, 18, 0.95);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid #2a2a2a;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--accent-color);
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        /* אזור ראשי (Hero) */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1503951914875-452162b0f3f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80') no-repeat center center/cover;
+            height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 20px;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        /* דירוג כוכבים */
+        .rating-box {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 8px 16px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid rgba(197, 168, 128, 0.3);
+        }
+
+        .rating-box .stars {
+            color: #ffcc00;
+        }
+
+        .rating-number {
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+
+        /* אזור תוכן מרכזי (גריד של מידע) */
+        .main-content {
+            max-width: 1200px;
+            margin: 60px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            .hero h1 {
+                font-size: 36px;
+            }
+        }
+
+        .info-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            border: 1px solid #2a2a2a;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .info-card h2 {
+            color: var(--accent-color);
+            margin-bottom: 25px;
+            font-size: 24px;
+            border-bottom: 2px solid rgba(197, 168, 128, 0.2);
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* שעות פעילות */
+        .hours-list {
+            list-style: none;
+        }
+
+        .hours-list li {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #2a2a2a;
+            font-size: 17px;
+        }
+
+        .hours-list li:last-child {
+            border-bottom: none;
+        }
+
+        .hours-list li.today {
+            color: var(--accent-color);
+            font-weight: 700;
+        }
+
+        .closed {
+            color: #ff4d4d;
+        }
+
+        /* פרטי קשר ומיקום */
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            font-size: 18px;
+        }
+
+        .contact-item i {
+            color: var(--accent-color);
+            font-size: 22px;
+            width: 30px;
+            text-align: center;
+        }
+
+        /* כפתורי הנעה לפעולה */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background-color: var(--accent-color);
+            color: #121212;
+            padding: 14px 28px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 18px;
+            transition: transform 0.2s, background-color 0.2s;
+            width: 100%;
+            margin-top: 10px;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn:hover {
+            background-color: #b5976f;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--text-color);
+            border: 1px solid #444;
+            margin-top: 15px;
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(255,255,255,0.05);
+            color: var(--accent-color);
+            border-color: var(--accent-color);
+        }
+
+        /* פוטר */
+        footer {
+            background-color: #0a0a0a;
+            text-align: center;
+            padding: 30px;
+            font-size: 14px;
+            color: var(--text-muted);
+            border-top: 1px solid #2a2a2a;
+            margin-top: 60px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="nav-container">
+            <div class="logo">אלעד ראובן</div>
+            <ul class="nav-links">
+                <li><a href="#about">אודות</a></li>
+                <li><a href="#hours">שעות פעילות</a></li>
+                <li><a href="#contact">צור קשר</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <section class="hero" id="about">
+        <h1>אלעד ראובן</h1>
+        <p>מספרה גברים ועיצוב שיער ברמה הגבוהה ביותר</p>
+        
+        <div class="rating-box">
+            <span class="rating-number">5.0</span>
+            <div class="stars">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+            </div>
+            <span style="color: var(--text-muted); font-size: 14px;">(65 ביקורות)</span>
+        </div>
+    </section>
+
+    <main class="main-content">
+        
+        <div class="info-card" id="hours">
+            <h2><i class="far fa-clock"></i> שעות פעילות</h2>
+            <ul class="hours-list">
+                <li id="day-0"><span>יום ראשון</span><span>9:30 – 20:00</span></li>
+                <li id="day-1"><span>יום שני</span><span class="closed">סגור</span></li>
+                <li id="day-2"><span>יום שלישי</span><span>9:30 – 20:00</span></li>
+                <li id="day-3"><span>יום רביעי</span><span>9:30 – 20:00</span></li>
+                <li id="day-4"><span>יום חמישי</span><span>9:30 – 20:00</span></li>
+                <li id="day-5"><span>יום שישי</span><span>8:30 – 16:00</span></li>
+                <li id="day-6"><span>יום שבת</span><span class="closed">סגור</span></li>
+            </ul>
+        </div>
+
+        <div class="info-card" id="contact">
+            <h2><i class="fas fa-map-marker-alt"></i> פרטי קשר וניווט</h2>
+            
+            <div class="contact-item">
+                <i class="fas fa-map-marked-alt"></i>
+                <div>
+                    <strong>כתובת המספרה:</strong><br>
+                    דוכיפת 8
+                </div>
+            </div>
+
+            <div class="contact-item">
+                <i class="fas fa-phone-alt"></i>
+                <div>
+                    <strong>טלפון להזמנות:</strong><br>
+                    052-343-8437
+                </div>
+            </div>
+
+            <hr style="border-color: #2a2a2a; margin: 20px 0;">
+
+            <a href="tel:0523438437" class="btn">
+                <i class="fas fa-phone-alt"></i> חייג עכשיו
+            </a>
+
+            <a href="https://waze.com/ul?q=דוכיפת 8" target="_blank" class="btn btn-secondary">
+                <i class="fab fa-waze"></i> ניווט באמצעות Waze
+            </a>
+        </div>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2026 אלעד ראובן - מספרה. כל הזכויות שמורות.</p>
+    </footer>
+
+    <script>
+        // קוד קטן שמדגיש אוטומטית את היום הנוכחי בשבוע בשבילך
+        const daysMap = [0, 2, 3, 4, 5, 6, 1]; // התאמה בין ימי השבוע של JS לימי השבוע באתר
+        const currentDay = new Date().getDay();
+        const todayElement = document.getElementById(`day-${currentDay}`);
+        if (todayElement) {
+            todayElement.classList.add('today');
+            // מוסיף חיווי קטן של "פתוח עכשיו" ליד היום הנוכחי, אלא אם כן זה יום שני או שבת
+            if(currentDay !== 1 && currentDay !== 6) {
+                const span = todayElement.querySelectorAll('span')[1];
+                span.innerHTML += ' <small style="color: #2ecc71; font-weight: normal;">(פתוח עכשיו)</small>';
+            }
+        }
+    </script>
+</body>
+</html>
